@@ -1,9 +1,9 @@
 services:
   - type: web
     name: studyinuk-backend
-    runtime: node
+    env: node
     plan: starter
-    buildCommand: npm install && npx esbuild server/index.ts --platform=node --bundle --format=esm --outdir=dist
+    buildCommand: npm install && npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
     startCommand: node dist/index.js
     envVars:
       - key: NODE_ENV
@@ -12,9 +12,9 @@ services:
         fromDatabase:
           name: studyinuk-db
           property: connectionString
-      - key: SUPABASE_URL
+      - key: VITE_SUPABASE_URL
         sync: false
-      - key: SUPABASE_SERVICE_KEY
+      - key: VITE_SUPABASE_ANON_KEY
         sync: false
 
 databases:
