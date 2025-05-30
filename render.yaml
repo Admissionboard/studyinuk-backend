@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: studyinuk-backend
+    runtime: node
+    plan: starter
+    buildCommand: npm install && npx esbuild server/index.ts --platform=node --bundle --format=esm --outdir=dist
+    startCommand: node dist/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: studyinuk-db
+          property: connectionString
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+
+databases:
+  - name: studyinuk-db
+    databaseName: studyinuk
+    plan: starter
